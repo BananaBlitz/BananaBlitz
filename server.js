@@ -1,3 +1,9 @@
+var mongoose = require('mongoose');
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/bana_blitz", {
+	useMongoClient: true
+});
+
 var request = require('request');
 var express = require('express');
 var app = express();
