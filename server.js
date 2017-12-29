@@ -6,12 +6,27 @@ mongoose.connect("mongodb://localhost/bana_blitz", {
 });
 
 var passport = require('passport');
+var flash = require('connect-flash');
+require('./config/passport.js')(passport);
+
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
 var request = require('request');
 var express = require('express');
 var app = express();
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+////
+app.use(bodyParser());
+app.use(session({ secret: 'thing' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+///
+
 
 var PORT = 3000;
 
@@ -24,7 +39,7 @@ http.listen(PORT, () => {
 });
 
 app.get("/", (req,res) => {
-	res.sendFile(__dirname +"/passportTest.html");
+	res.sendFile(__dirname +"/signUpTest.html", {message: req.flash('signupMessage')});
 });
 
 app.get("/users", (req,res) => {
@@ -45,15 +60,16 @@ io.on('connection', socket => {
 });
 
 
-// app.get("/signup", (req,res) => {
-// 	res.sendFile
-// });
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.post("/signup", passport.authenticate('local', {
+	successRedirect:'/home',
+	failureRedirect: '/',
+	successFlash: 'Welcome',
+	failureFlash: 'Invalid username or password'})
+);
 
 app.get("/home", isLoggedIn, (req, res) => {
- 
+	res.sendFile(__dirname + "/test.html");
 });
 
 function isLoggedIn(req, res, next) {
