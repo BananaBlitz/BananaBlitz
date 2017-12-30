@@ -51,11 +51,6 @@ app.get("/users", (req,res) => {
 	});
 });
 
-app.post("/users", (req,res) => {
-	db.User.create()
-});
-
-
 io.on('connection', socket => {
 	console.log('User connected');
 });
