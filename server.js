@@ -35,25 +35,23 @@ app.use(flash());
 
 var PORT = 3000;
 
+require('./routes.js')(app, passport, db);
+
 http.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
 });
 
-app.get("/", (req,res) => {
-	res.sendFile(__dirname +"/signUpTest.html");
-});
+// app.get("/", (req,res) => {
+// 	res.sendFile(__dirname +"/signUpTest.html");
+// });
 
-app.get("/users", (req,res) => {
-	db.User.find().then(user => {
-		res.json(user);
-	}).catch(err => {
-		console.log(err);
-	});
-});
-
-app.post("/users", (req,res) => {
-	db.User.create()
-});
+// app.get("/users", (req,res) => {
+// 	db.User.find().then(user => {
+// 		res.json(user);
+// 	}).catch(err => {
+// 		console.log(err);
+// 	});
+// });
 
 
 io.on('connection', socket => {
@@ -62,19 +60,21 @@ io.on('connection', socket => {
 
 
 
-app.post("/signup", passport.authenticate('local', {
-	successRedirect:'/home',
-	failureRedirect: '/',
-	successFlash: 'Welcome',
-	failureFlash: true
-}));
 
-app.get("/home", isLoggedIn, (req, res) => {
-	res.sendFile(__dirname + "/test.html");
-});
 
-function isLoggedIn(req, res, next) {
-	if(req.isAuthenticated()) return next();
+// app.post("/signup", passport.authenticate('local', {
+// 	successRedirect:'/home',
+// 	failureRedirect: '/',
+// 	successFlash: 'Welcome',
+// 	failureFlash: true
+// }));
 
-	res.redirect("/");
-}
+// app.get("/home", isLoggedIn, (req, res) => {
+// 	res.sendFile(__dirname + "/test.html");
+// });
+
+// function isLoggedIn(req, res, next) {
+// 	if(req.isAuthenticated()) return next();
+
+// 	res.redirect("/");
+// }
