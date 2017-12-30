@@ -14,21 +14,38 @@ module.exports = function(passport) {
 		})
 	});
 
-	passport.use(new LocalStrategy(
-		(username, password, done) => {
-			User.findOne({ username: username }, (err, user) => {
-				if(err) {return done(err);}
+	passport.use(new LocalStrategy({
+		usernameField: 'username',
+		passwordField: 'password',
+		passReqToCallback: true
+	},
+	(req, username, password, done) => {
+		// proccess.nextTick(function() {
 
-				if(!user) {
-					return done(null, false, {message: 'Incorrect username'});
-				}
+		User.findOne({ 'username': username }, (err, user) => {
+			if(err) return done(err);
 
-				if(!user.validPassword(password)) {
-					return done(null, false, {message: 'Incorrect password'});
-				}
+			if(user) {
+				return done(null, false, console.log('Username taken'));
+			} else {
+				// console.log(req);
+				var newUser = new User();
+				newUser.username = username;
+				newUser.password = newUser.generateHash(password);
 
-				return done(null, user);
-			});
-		}
+				// newUser.create({username: username, password: password}, (err,data) =>{
+				// 	if(err) console.log(err);
+				// }); 
+
+				newUser.save(err => {
+					if(err) throw err;
+
+					return done(null, newUser);
+				});
+			}
+		});
+
+		// });
+	}
 	));	
 }
