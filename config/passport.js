@@ -25,7 +25,7 @@ module.exports = function(passport) {
 			if(err) return done(err);
 
 			if(user) {
-				return done(null, false, console.log('Username taken'));
+				return done(null, false, console.log('Username Taken'));
 			} else {
 				var newUser = new User();
 				newUser.username = username;

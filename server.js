@@ -35,10 +35,6 @@ app.use(flash());
 
 var PORT = 3000;
 
-// db.User.create({username: "Jon", password: "pass"}, (err, data) => {
-// 	if(err) console.log(err);
-// });
-
 http.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
 });
