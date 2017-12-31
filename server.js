@@ -45,14 +45,13 @@ http.listen(PORT, () => {
 // 	res.sendFile(__dirname +"/signUpTest.html");
 // });
 
-// app.get("/users", (req,res) => {
-// 	db.User.find().then(user => {
-// 		res.json(user);
-// 	}).catch(err => {
-// 		console.log(err);
-// 	});
-// });
-
+app.get("/users", (req,res) => {
+	db.User.find().then(user => {
+		res.json(user);
+	}).catch(err => {
+		console.log(err);
+	});
+});
 
 io.on('connection', socket => {
 	console.log('User connected');
