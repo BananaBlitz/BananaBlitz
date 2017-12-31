@@ -45,9 +45,9 @@ app.get("/", (req,res) => {
 
 app.get("/users", (req,res) => {
 	db.User.find().then(user => {
-		res.json(user);
 	}).catch(err => {
 		console.log(err);
+		res.json(user);
 	});
 });
 
