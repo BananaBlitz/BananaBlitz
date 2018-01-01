@@ -11,14 +11,10 @@ module.exports = function(app, passport, db) {
 		});
 	});
 
-	app.post("/users", (req,res) => {
-		db.User.create()
-	});
-
 	app.post("/signup", passport.authenticate('local', {
 		successRedirect:'/home',
 		failureRedirect: '/',
-		successFlash: 'Welcome',
+		successFlash: 'Welcome', 
 		failureFlash: true
 	}));
 
