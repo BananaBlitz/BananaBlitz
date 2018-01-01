@@ -33,24 +33,10 @@ app.use(passport.session());
 app.use(flash());
 
 
-
-
 require('./routes.js')(app, passport, db);
 
 http.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
-});
-
-app.get("/", (req,res) => {
-	res.sendFile(__dirname +"/signUpTest.html");
-});
-
-app.get("/users", (req,res) => {
-	db.User.find().then(user => {
-		res.json(user);
-	}).catch(err => {
-		console.log(err);
-	});
 });
 
 io.on('connection', socket => {
