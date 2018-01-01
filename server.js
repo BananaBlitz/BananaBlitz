@@ -41,6 +41,18 @@ http.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
 });
 
+app.get("/", (req,res) => {
+	res.sendFile(__dirname +"/signUpTest.html");
+});
+
+app.get("/users", (req,res) => {
+	db.User.find().then(user => {
+		res.json(user);
+	}).catch(err => {
+		console.log(err);
+	});
+});
+
 io.on('connection', socket => {
 	console.log('User connected');
 });
