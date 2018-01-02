@@ -33,7 +33,7 @@ app.use(passport.session());
 app.use(flash());
 
 
-require('./routes.js')(app, passport, db);
+require('./config/routes.js')(app, passport, db);
 
 http.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
