@@ -3,6 +3,10 @@ module.exports = function(app, passport, db) {
 		res.sendFile(__dirname +"/signUpTest.html");
 	});
 
+	app.get("/login", (req, res) => {
+		res.sendFile(__dirname + "/loginTest.html");
+	});
+
 	app.get("/users", (req,res) => {
 		db.User.find().then(user => {
 			res.json(user);
@@ -11,13 +15,20 @@ module.exports = function(app, passport, db) {
 		});
 	});
 
-	app.post("/signup", passport.authenticate('local', {
+	app.post("/signup", passport.authenticate('signup', {
 		successRedirect:'/home',
 		failureRedirect: '/',
 		successFlash: 'Welcome', 
 		failureFlash: true
 	}));
 
+	app.post("/login", passport.authenticate('login', {
+		successRedirect: '/home',
+		failureRedirect: '/login',
+		failureFlash: true
+	}));
+
+	//After user authenticated they can access home route
 	app.get("/home", isLoggedIn, (req, res) => {
 		res.sendFile(__dirname + "/test.html");
 	});

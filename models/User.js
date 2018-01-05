@@ -12,18 +12,24 @@ var UserSchema = new Schema ({
 		type: String,
 		required: "User needs password"
 	},
-	ranking: { 
+	ranking: {  
 		type: Number
+	},
+	created: {
+		type: Date,
+		default: Date.now()
 	}
 });
 
+// Generates Hash
 UserSchema.methods.generateHash = password => {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 }
 
 UserSchema.methods.validPassword = password => {
-	return bcrypt.compareSync(password, this.local.password);
+	return bcrypt.compareSync(password, this.password);
 }
+
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User; 
