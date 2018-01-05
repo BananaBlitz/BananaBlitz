@@ -1,8 +1,11 @@
 import React from 'react';
+import Avatar from '../Avatar/Avatar'
+import './Player.css'
 
 const player = ( props ) => {
     return (
         <div className="Player">
+            <Avatar />
             <button>Challenge Spelling</button>
             <button>Word Completed</button>
             <div></div>
@@ -12,6 +15,8 @@ const player = ( props ) => {
 		        onkeypress="return"
 		        onChange={props.changed}
            />
+           <div></div>
+           <button>Submit</button>
         </div>
     )
 };

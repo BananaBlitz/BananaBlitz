@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import './App.css';
-import Validation from './components/Validation/Validation';
-import Char from './components/Char/Char';
-import Player from './components/Player/Player'
+import React, {Component} from 'react';
+import Validation from '../../components/Validation/Validation';
+import Char from '../../components/Char/Char';
+import Player from '../../components/Player/Player'
 
-  class App extends Component {
+  class WordBuilder extends Component {
   state = {
     userInput: ''
   } 
@@ -33,4 +32,4 @@ import Player from './components/Player/Player'
   }
 }
 
-export default App;
+export default WordBuilder;
