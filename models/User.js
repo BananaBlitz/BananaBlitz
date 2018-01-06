@@ -22,12 +22,17 @@ var UserSchema = new Schema ({
 });
 
 // Generates Hash
-UserSchema.methods.generateHash = password => {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+UserSchema.methods.generateHash =  function(password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 }
 
-UserSchema.methods.validPassword = password => {
-	return bcrypt.compareSync(password, this.password);
+UserSchema.methods.validPassword = function(formPassword) {
+	console.log(this);
+	if(this.password != null) {
+	  return bcrypt.compareSync(formPassword, this.password);
+	} else {
+		
+	}
 }
 
 

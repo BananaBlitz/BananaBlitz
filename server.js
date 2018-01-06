@@ -21,7 +21,6 @@ var app = express();
 var PORT = 3000;
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
 app.use(express.static(path.join(__dirname, 'banana_spell/build')))
 
@@ -38,10 +37,6 @@ app.use(flash());
 
 require('./config/routes.js')(app, passport, db, path);
 
-http.listen(PORT, () => {
+app.listen(PORT, () => {
 	console.log("Running on port: " + PORT);
-});
-
-io.on('connection', socket => {
-	console.log('User connected');
 });

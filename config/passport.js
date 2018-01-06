@@ -7,7 +7,7 @@ module.exports = function(passport) {
 	passport.serializeUser( (user, done) => {
 		done(null, user.id);
 	});
-
+ 
 	passport.deserializeUser( (id,done) => {
 		User.findById(id, (err, user) => { 
 			done(err, user);
@@ -42,17 +42,18 @@ module.exports = function(passport) {
 	));	
 
 	passport.use('login', new LocalStrategy ({
-		usernameField: 'username',
-		passwordField: 'password',
 		passReqToCallback: true
 	}, 
 	(req, username, password, done) => {
+		console.log("User/password ||",username, " ", password);
 		User.findOne({'username': username}, (err, user) => {
+			console.log(user);
+
 			if(err) return done(err);
 
 			if(!user) return done(null, false, console.log('No user found'));
 
-			if(!user.validPassword(password)) 
+			if(!user.validPassword(password))
 				return done(null, false, console.log('Wrong password'));
 
 			return done(null, user);
